@@ -1,11 +1,9 @@
 import { useState } from "react";
-import "./App.css";
-import { FiBell, FiSettings, FiEye, FiEyeOff } from "react-icons/fi";
-import SignUp from "./SignUp";
-import ForgotPassword from "./ForgotPassword";
+import { FiEye, FiEyeOff, FiBell, FiSettings } from "react-icons/fi";
 
-function Login({ onNavigate }) {
+function SignUp({ onNavigate }) {
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   return (
     <div className="page">
@@ -32,28 +30,23 @@ function Login({ onNavigate }) {
         {/* Main Content */}
         <div className="content">
 
-          {/* Left Side */}
-          <div className="left-section">
-            <div className="overlay">
-              <h1>FUCHSIUS</h1>
-              <p>Empowering education through seamless online learning.</p>
-            </div>
-          </div>
-
-          {/* Right Side */}
+          {/* Right Side - Form (left in layout) */}
           <div className="right-section">
             <div className="login-card">
-              <h2>Welcome Back</h2>
-              <p className="subtitle">Please enter your details to sign in.</p>
+              <h2>Create an Account</h2>
+              <p className="subtitle">Sign up to access thousands of courses.</p>
+
+              <label>Full Name</label>
+              <input type="text" placeholder="John Doe" />
 
               <label>Email Address</label>
-              <input type="email" placeholder="Enter your email" />
+              <input type="email" placeholder="john@example.com" />
 
               <label>Password</label>
               <div className="password-box">
                 <input
                   type={showPassword ? "text" : "password"}
-                  placeholder="••••••••"
+                  placeholder="Create a password"
                 />
                 <span
                   className="eye-icon"
@@ -63,26 +56,27 @@ function Login({ onNavigate }) {
                 </span>
               </div>
 
-              <div className="options">
-                <label>
-                  <input type="checkbox" /> Remember me
-                </label>
-                <a
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    onNavigate("forgot");
-                  }}
+              <label>Confirm Password</label>
+              <div className="password-box">
+                <input
+                  type={showConfirm ? "text" : "password"}
+                  placeholder="Confirm your password"
+                />
+                <span
+                  className="eye-icon"
+                  onClick={() => setShowConfirm(!showConfirm)}
                 >
-                  Forgot password?
-                </a>
+                  {showConfirm ? <FiEyeOff /> : <FiEye />}
+                </span>
               </div>
 
-              <button className="signin-btn">Sign In</button>
+              <button className="signin-btn" style={{ marginTop: "28px" }}>
+                Sign Up
+              </button>
 
               <div className="social-divider">
                 <span className="divider-line" />
-                <span className="divider-text">or continue with</span>
+                <span className="divider-text">or sign up with</span>
                 <span className="divider-line" />
               </div>
 
@@ -109,9 +103,19 @@ function Login({ onNavigate }) {
               </div>
 
               <p className="signup-text">
-                Don't have an account?{" "}
-                <span onClick={() => onNavigate("signup")}>Sign up</span>
+                Already have an account?{" "}
+                <span onClick={() => onNavigate && onNavigate("login")}>
+                  Log in
+                </span>
               </p>
+            </div>
+          </div>
+
+          {/* Left Side - Hero */}
+          <div className="left-section">
+            <div className="overlay">
+              <h1>FUCHSIUS</h1>
+              <p>Join our community and start learning today.</p>
             </div>
           </div>
 
@@ -124,12 +128,4 @@ function Login({ onNavigate }) {
   );
 }
 
-function App() {
-  const [page, setPage] = useState("login");
-
-  if (page === "signup") return <SignUp onNavigate={setPage} />;
-  if (page === "forgot") return <ForgotPassword onNavigate={setPage} />;
-  return <Login onNavigate={setPage} />;
-}
-
-export default App;
+export default SignUp;
